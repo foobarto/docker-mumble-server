@@ -13,7 +13,7 @@
 
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
 NAME=mumble-server
-DESC=${MUMBLE_SERVER_NAME:-"Mumble Server"}
+DESC="Mumble Server"
 PIDDIR=/var/run/$NAME
 PIDFILE=$PIDDIR/$NAME.pid
 DAEMON=/usr/sbin/murmurd
@@ -22,7 +22,7 @@ GROUP=mumble-server
 
 test -x $DAEMON || exit 0
 
-INIFILE=/etc/mumble-server.ini
+INIFILE=/data/mumble-server.ini
 DAEMON_OPTS="-ini $INIFILE"
 MURMUR_DAEMON_START=0
 MURMUR_USE_CAPABILITIES=0
