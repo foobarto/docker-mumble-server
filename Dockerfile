@@ -7,8 +7,7 @@ RUN apt-get update && \
     && rm -rf /var/lib/apt/lists/*
 
 # Default port for mumble
-EXPOSE 64738
-EXPOSE 64738/udp
+EXPOSE 64738 64738/udp
 
 ENV MUMBLE_SERVER_NAME="Mumble Server"
 ENV MUMBLE_MAX_USERS=10000
