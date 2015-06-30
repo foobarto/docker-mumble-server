@@ -13,7 +13,7 @@
 
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
 NAME=mumble-server
-DESC="Mumble VoIP Server"
+DESC=${MUMBLE_SERVER_NAME:-"Mumble Server"}
 PIDDIR=/var/run/$NAME
 PIDFILE=$PIDDIR/$NAME.pid
 DAEMON=/usr/sbin/murmurd
