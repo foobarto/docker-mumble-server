@@ -17,8 +17,8 @@ DESC="Mumble Server"
 PIDDIR=/var/run/$NAME
 PIDFILE=$PIDDIR/$NAME.pid
 DAEMON=/usr/sbin/murmurd
-USER=mumble-server
-GROUP=mumble-server
+USER=root
+GROUP=root
 
 test -x $DAEMON || exit 0
 
