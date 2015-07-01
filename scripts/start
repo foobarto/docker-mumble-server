@@ -9,6 +9,10 @@
 
 INI_PATH=/data/mumble-server.ini
 
+if [ ! -f /data/mumble-server.ini ]
+then
+    cp /etc/mumble-server.ini /data/
+fi
 
 # Set Mumble SuperUser password
 if [ ! -f /data/superuser_password.txt ]
