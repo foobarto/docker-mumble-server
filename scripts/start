@@ -9,17 +9,12 @@
 
 INI_PATH=/data/mumble-server.ini
 
-if [ ! -f /data/mumble-server.ini ]
-then
-    cp /etc/mumble-server.ini /data/
-fi
-
 # Set Mumble SuperUser password
 if [ ! -f /data/superuser_password.txt ]
 then
     SUPERUSER_PASSWORD=`pwgen -c -n -1 15`
     echo $SUPERUSER_PASSWORD > /data/superuser_password.txt
-    murmurd -ini $INI_PATH -supw $SUPERUSER_PASSWORD
+    /usr/local/bin/murmurd -ini $INI_PATH -supw $SUPERUSER_PASSWORD
     sleep 3
     echo
     echo "# ------------------------------------------------------------------------------"
@@ -31,4 +26,4 @@ then
     echo "# ------------------------------------------------------------------------------"
     echo
 fi
-/usr/sbin/murmurd -ini $INI_PATH -fg -v
+/usr/local/bin/murmurd -ini $INI_PATH -fg -v
