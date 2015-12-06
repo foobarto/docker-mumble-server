@@ -1,10 +1,9 @@
-#!/bin/bash
+#!/bin/sh
 # Thanks to https://github.com/overshard/docker-mumble/blob/master/scripts/start for this one
 # -----------------------------------------------------------------------------
 # docker-mumble /start script
 #
 # Authors: Isaac Bythewood
-# Updated: Oct 20th, 2014
 # -----------------------------------------------------------------------------
 
 INI_PATH=/data/mumble-server.ini
@@ -12,9 +11,9 @@ INI_PATH=/data/mumble-server.ini
 # Set Mumble SuperUser password
 if [ ! -f /data/superuser_password.txt ]
 then
-    SUPERUSER_PASSWORD=`pwgen -c -n -1 15`
+    SUPERUSER_PASSWORD=`date +%s | sha256sum | base64 | head -c 32 ; echo`
     echo $SUPERUSER_PASSWORD > /data/superuser_password.txt
-    /usr/local/bin/murmurd -ini $INI_PATH -supw $SUPERUSER_PASSWORD
+    murmurd -ini $INI_PATH -supw $SUPERUSER_PASSWORD
     sleep 3
     echo
     echo "# ------------------------------------------------------------------------------"
@@ -26,4 +25,4 @@ then
     echo "# ------------------------------------------------------------------------------"
     echo
 fi
-/usr/local/bin/murmurd -ini $INI_PATH -fg -v
+/usr/sbin/murmurd -ini $INI_PATH -fg -v

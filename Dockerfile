@@ -1,29 +1,23 @@
-FROM ubuntu:14.04
-MAINTAINER Bartosz Ptaszynski <foobarto@gmail.com>
+FROM busybox
+MAINTAINER  Bartosz Ptaszynski <foobarto@gmail.com>
+
+ENV MUMBLE_VERSION 1.2.11
 
 # Default port for mumble
 EXPOSE 64738 64738/udp
-ENV VERSION "1.2.10"
 
-ADD ./scripts/start /usr/local/bin/mumble-start
-RUN apt-get update && \
-    apt-get -y install \
-      pwgen \
-      wget && \
-    rm -rf /var/lib/apt/lists/* && \
-    mkdir /data && \
-    wget https://github.com/mumble-voip/mumble/releases/download/$VERSION/murmur-static_x86-$VERSION.tar.bz2 && \
-    tar xvf murmur-static_x86-$VERSION.tar.bz2 && \
-    cp murmur-static_x86-$VERSION/murmur.x86 /usr/local/bin/murmurd && \
-    useradd mumble-server && \
-    chown mumble-server /data && \
-    chmod +x /usr/local/bin/mumble-start
+RUN mkdir /data 
+
+ADD https://github.com/mumble-voip/mumble/releases/download/$MUMBLE_VERSION/murmur-static_x86-$MUMBLE_VERSION.tar.bz2 /murmur-static_x86-$MUMBLE_VERSION.tar.bz2
+RUN tar xvf murmur-static_x86-$MUMBLE_VERSION.tar.bz2 && \
+    cp murmur-static_x86-$MUMBLE_VERSION/murmur.x86 /usr/sbin/murmurd && \
+    adduser -S -u 1000 mumble-server mumble-server && \
+    chown mumble-server /data 
 
 USER mumble-server
 
-ADD ./mumble/mumble-server.ini /data/mumble-server.ini
-ADD ./init/murmur.init /etc/init/murmur.init
-
+ADD ./mumble-server.ini /data/mumble-server.ini
+ADD ./start /start
 VOLUME ["/data"]
 
-CMD ["/usr/local/bin/mumble-start"]
+CMD ["/start"]
