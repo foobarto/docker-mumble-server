@@ -11,7 +11,7 @@ INI_PATH=/data/mumble-server.ini
 # Set Mumble SuperUser password
 if [ ! -f /data/superuser_password.txt ]
 then
-    SUPERUSER_PASSWORD=`date +%s | sha256sum | base64 | head -c 32 ; echo`
+    SUPERUSER_PASSWORD=`< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-32};echo;`
     echo $SUPERUSER_PASSWORD > /data/superuser_password.txt
     murmurd -ini $INI_PATH -supw $SUPERUSER_PASSWORD
     sleep 3
